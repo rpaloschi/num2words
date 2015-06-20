@@ -24,6 +24,8 @@ from . import lang_DE
 from . import lang_ES
 from . import lang_LT
 from . import lang_LV
+from . import lang_PT_BR
+
 
 CONVERTER_CLASSES = {
     'en': lang_EN.Num2Word_EN(),
@@ -34,6 +36,7 @@ CONVERTER_CLASSES = {
     'es': lang_ES.Num2Word_ES(),
     'lt': lang_LT.Num2Word_LT(),
     'lv': lang_LV.Num2Word_LV(),
+    'pt_BR': lang_PT_BR.Num2Word_ptBR(),
 }
 
 def num2words(number, ordinal=False, lang='en'):
@@ -48,3 +51,4 @@ def num2words(number, ordinal=False, lang='en'):
         return converter.to_ordinal(number)
     else:
         return converter.to_cardinal(number)
+

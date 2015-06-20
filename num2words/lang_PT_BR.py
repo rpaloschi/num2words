@@ -153,8 +153,8 @@ class Num2Word_ptBR(Num2Word_EU):
         if old:
             return self.to_splitnum(val, hightxt="real/is", lowtxt="centavo/s",
                                     divisor=1000, jointxt="y", longval=longval)
-        return super(Num2Word_ES, self).to_currency(val, jointxt="y",
-                                                    longval=longval)
+        return super(Num2Word_ptBR, self).to_currency(val, jointxt="y",
+                                                      longval=longval)
 
 
 n2w = Num2Word_ptBR()
@@ -170,9 +170,9 @@ def main():
         n2w.test(val)
 
     n2w.test(1325325436067876801768700107601001012212132143210473207540327057320957032975032975093275093275093270957329057320975093272950730)
-    print n2w.to_currency(1222)
-    print n2w.to_currency(1222, old=True)
-    print n2w.to_year(1222)
+    print(n2w.to_currency(1222))
+    print(n2w.to_currency(1222, old=True))
+    print(n2w.to_year(1222))
 
 if __name__ == "__main__":
     main()
