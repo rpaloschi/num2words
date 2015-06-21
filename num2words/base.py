@@ -19,6 +19,7 @@ from .orderedmapping import OrderedMapping
 
 
 class Num2Word_Base(object):
+
     def __init__(self):
         self.cards = OrderedMapping()
         self.is_title = False
@@ -36,29 +37,24 @@ class Num2Word_Base(object):
         self.set_numwords()
 
         self.MAXVAL = 1000 * self.cards.order[0]
-        
 
     def set_numwords(self):
         self.set_high_numwords(self.high_numwords)
         self.set_mid_numwords(self.mid_numwords)
         self.set_low_numwords(self.low_numwords)
 
-
     def gen_high_numwords(self, units, tens, lows):
         out = [u + t for t in tens for u in units]
         out.reverse()
         return out + lows
 
-
     def set_mid_numwords(self, mid):
         for key, val in mid:
             self.cards[key] = val
 
-
     def set_low_numwords(self, numwords):
         for word, n in zip(numwords, range(len(numwords) - 1, -1, -1)):
             self.cards[n] = word
-
 
     def splitnum(self, value):
         for elem in self.cards:
@@ -85,10 +81,9 @@ class Num2Word_Base(object):
 
             return out
 
-
     def to_cardinal(self, value):
         try:
-            assert long(value) == value
+            assert int(value) == value
         except (ValueError, TypeError, AssertionError):
             return self.to_cardinal_float(value)
 
@@ -101,12 +96,10 @@ class Num2Word_Base(object):
 
         if value >= self.MAXVAL:
             raise OverflowError(self.errmsg_toobig % (value, self.MAXVAL))
-        
 
         val = self.splitnum(value)
         words, num = self.clean(val)
         return self.title(out + words)
-
 
     def to_cardinal_float(self, value):
         try:
@@ -129,10 +122,8 @@ class Num2Word_Base(object):
 
         return " ".join(out)
 
-
     def merge(self, curr, next):
         raise NotImplementedError
-
 
     def clean(self, val):
         out = val
@@ -155,7 +146,6 @@ class Num2Word_Base(object):
             val = out
         return out[0]
 
-
     def title(self, value):
         if self.is_title:
             out = []
@@ -168,29 +158,23 @@ class Num2Word_Base(object):
             value = " ".join(out)
         return value
 
-
     def verify_ordinal(self, value):
-        if not value == long(value):
-            raise TypeError, self.errmsg_floatord %(value)
+        if not value == int(value):
+            raise TypeError(self.errmsg_floatord % value)
         if not abs(value) == value:
-            raise TypeError, self.errmsg_negord %(value)
-
+            raise TypeError(self.errmsg_negord % value)
 
     def verify_num(self, value):
         return 1
 
-
     def set_wordnums(self):
         pass
 
-            
-    def to_ordinal(value):
+    def to_ordinal(self, value):
         return self.to_cardinal(value)
-
 
     def to_ordinal_num(self, value):
         return value
-
 
     # Trivial version
     def inflect(self, value, text):
@@ -198,7 +182,6 @@ class Num2Word_Base(object):
         if value == 1:
             return text[0]
         return "".join(text)
-
 
     #//CHECK: generalise? Any others like pounds/shillings/pence?
     def to_splitnum(self, val, hightxt="", lowtxt="", jointxt="",
@@ -228,22 +211,17 @@ class Num2Word_Base(object):
                 out.append(self.title(self.inflect(low, lowtxt)))
         return " ".join(out)
 
-
     def to_year(self, value, **kwargs):
         return self.to_cardinal(value)
-
 
     def to_currency(self, value, **kwargs):
         return self.to_cardinal(value)
 
-
     def base_setup(self):
         pass
 
-
     def setup(self):
         pass
-
 
     def test(self, value):
         try:

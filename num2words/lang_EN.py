@@ -46,18 +46,19 @@ class Num2Word_EN(lang_EU.Num2Word_EU):
                       "nine"   : "ninth",
                       "twelve" : "twelfth" }
 
+    def merge(self, ltext_lnum, rtext_rnum):
+        ltext, lnum = ltext_lnum
+        rtext, rnum = rtext_rnum
 
-    def merge(self, (ltext, lnum), (rtext, rnum)):
         if lnum == 1 and rnum < 100:
             return (rtext, rnum)
         elif 100 > lnum > rnum :
-            return ("%s-%s"%(ltext, rtext), lnum + rnum)
+            return "%s-%s" % (ltext, rtext), lnum + rnum
         elif lnum >= 100 > rnum:
-            return ("%s and %s"%(ltext, rtext), lnum + rnum)
+            return "%s and %s"%(ltext, rtext), lnum + rnum
         elif rnum > lnum:
-            return ("%s %s"%(ltext, rtext), lnum * rnum)
-        return ("%s, %s"%(ltext, rtext), lnum + rnum)
-
+            return "%s %s"%(ltext, rtext), lnum * rnum
+        return "%s, %s"%(ltext, rtext), lnum + rnum
 
     def to_ordinal(self, value):
         self.verify_ordinal(value)
@@ -74,11 +75,9 @@ class Num2Word_EN(lang_EU.Num2Word_EU):
         outwords[-1] = "-".join(lastwords)
         return " ".join(outwords)
 
-
     def to_ordinal_num(self, value):
         self.verify_ordinal(value)
         return "%s%s"%(value, self.to_ordinal(value)[-2:])
-
 
     def to_year(self, val, longval=True):
         if not (val//100)%10:
@@ -105,8 +104,8 @@ def main():
         n2w.test(val)
     n2w.test(1325325436067876801768700107601001012212132143210473207540327057320957032975032975093275093275093270957329057320975093272950730)
     for val in [1,120,1000,1120,1800, 1976,2000,2010,2099,2171]:
-        print val, "is", n2w.to_currency(val)
-        print val, "is", n2w.to_year(val)
+        print(val, "is", n2w.to_currency(val))
+        print(val, "is", n2w.to_year(val))
     
 
 if __name__ == "__main__":

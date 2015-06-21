@@ -173,9 +173,9 @@ def main():
         n2w.test(val)
 
     n2w.test(1325325436067876801768700107601001012212132143210473207540327057320957032975032975093275093275093270957329057320975093272950730)
-    print n2w.to_currency(1222)
-    print n2w.to_currency(1222, old=True)
-    print n2w.to_year(1222)
+    print(n2w.to_currency(1222))
+    print(n2w.to_currency(1222, old=True))
+    print(n2w.to_year(1222))
 
 if __name__ == "__main__":
     main()
