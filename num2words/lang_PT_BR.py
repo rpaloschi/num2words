@@ -95,6 +95,17 @@ class Num2Word_ptBR(Num2Word_EU):
     def setup(self):
         pass
 
+    # Quite a mess for REAL currency...
+    def inflect(self, value, text):
+        text = text.split("/")
+        if value == 1:
+            return text[0]
+
+        if text[0] == 'real':
+            return 'reais'
+
+        return "".join(text)
+
     def merge(self, curr, next):
         ctext, cnum, ntext, nnum = curr + next
 

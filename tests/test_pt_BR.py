@@ -17,12 +17,35 @@
 from unittest import TestCase
 
 from num2words import num2words
+from num2words.lang_PT_BR import Num2Word_ptBR
+
 
 class Num2WordsPTBRTest(TestCase):
+
+    def setUp(self):
+        self.converter = Num2Word_ptBR()
 
     def test_units(self):
         self.assertEqual('um', num2words(1, ordinal=False, lang='pt_BR'))
         self.assertEqual('nove', num2words(9, ordinal=False, lang='pt_BR'))
+
+    def test_units_currency(self):
+        self.assertEqual('um real', self.converter.to_splitnum(
+            1.00, hightxt="real/is", lowtxt="centavo/s", divisor=1,
+            jointxt="e", longval=True, cents=True))
+        self.assertEqual('nove reais', self.converter.to_splitnum(
+            9.00, hightxt="real/is", lowtxt="centavo/s", divisor=1,
+            jointxt="e", longval=True, cents=True))
+
+    def test_cents(self):
+        self.assertEqual('um real e um centavo', self.converter.to_splitnum(
+            1.01, hightxt="real/is", lowtxt="centavo/s", divisor=1,
+            jointxt="e", longval=True, cents=True))
+        self.assertEqual('nove reais e trinta e sete centavos',
+                         self.converter.to_splitnum(9.37, hightxt="real/is",
+                                                    lowtxt="centavo/s",
+                                                    divisor=1, jointxt="e",
+                                                    longval=True, cents=True))
 
     def test_tens(self):
         self.assertEqual('onze', num2words(11, ordinal=False, lang='pt_BR'))

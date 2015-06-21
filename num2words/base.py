@@ -15,6 +15,7 @@
 # MA 02110-1301 USA
 
 from __future__ import unicode_literals
+from math import ceil
 from .orderedmapping import OrderedMapping
 
 
@@ -83,7 +84,7 @@ class Num2Word_Base(object):
 
     def to_cardinal(self, value):
         try:
-            assert int(value) == value
+            assert isinstance(value, int)
         except (ValueError, TypeError, AssertionError):
             return self.to_cardinal_float(value)
 
@@ -185,12 +186,15 @@ class Num2Word_Base(object):
 
     #//CHECK: generalise? Any others like pounds/shillings/pence?
     def to_splitnum(self, val, hightxt="", lowtxt="", jointxt="",
-                    divisor=100, longval=True, cents = True):
+                    divisor=100, longval=True, cents=True):
         out = []
         try:
             high, low = val
         except TypeError:
             high, low = divmod(val, divisor)
+            high = int(high)
+            low = int(ceil((low * 100)*100)/100)
+
         if high:
             hightxt = self.title(self.inflect(high, hightxt))
             out.append(self.to_cardinal(high))
